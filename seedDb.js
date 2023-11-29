@@ -19,4 +19,4 @@ connection.query(seedQuery, (err, res) => {
 
     console.log("SQL seeding completed!\n", JSON.stringify(res));
     connection.end();
-})
+});
