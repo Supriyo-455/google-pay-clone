@@ -24,7 +24,24 @@ const createUser = async (user) => {
     return data;
 }
 
+const createTransaction = async (transactionRequest) => {
+    const connection = await mysql2.createConnection(config.db);
+    const [rows] = await connection.execute(`insert into ${transactionTable} (fromPhoneNum, toPhoneNum, amount)
+                                values ('${transactionRequest.fromPhoneNum}','${transactionRequest.toPhoneNum}', ${transactionRequest.amount})`);
+    const data = helper.emptyOrRows(rows);
+    return data;
+}
+
+const setMoney = async (phoneNum, money) => {
+    const connection = await mysql2.createConnection(config.db);
+    const [rows] = await connection.execute(`update ${usersTable} set availableAmount=${money} where phoneNum='${phoneNum}'`);
+    const data = helper.emptyOrRows(rows);
+    return data;
+}
+
 module.exports = {
     getUserByPhone,
-    createUser
+    createUser,
+    createTransaction,
+    setMoney
 };

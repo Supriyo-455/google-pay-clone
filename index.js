@@ -1,8 +1,12 @@
 const express = require('express');
+
 const jwtMiddleware = require('./middlewares/jwtMiddleware');
 const errorMiddleware = require('./middlewares/errorMiddleware');
+
 const loginHandler = require('./handlers/loginHandler');
 const signupHandler = require('./handlers/signupHandler');
+const profileHandler = require('./handlers/profileHandler');
+const sendMoneyHandler = require('./handlers/sendMoneyHandler');
 
 const app = express();
 const port = 4000;
@@ -16,9 +20,9 @@ app.use(express.urlencoded({
 app.use('/login', loginHandler);
 app.use('/signup', signupHandler);
 
-// app.use('/profile', [jwtValidate, profileHandler]);
-// app.use('/send', [jwtValidate, sendMoneyHandler]);
-// app.use('/balance', [jwtValidate, balanceHandler]);
+app.use('/profile', [jwtMiddleware, profileHandler]);
+app.use('/send', [jwtMiddleware, sendMoneyHandler]);
+// app.use('/balance', [jwtMiddleware, balanceHandler]);
 
 app.use(errorMiddleware);
 
