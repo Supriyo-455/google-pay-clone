@@ -39,9 +39,21 @@ const setMoney = async (phoneNum, money) => {
     return data;
 }
 
+const getAllTransactions = async (senderPhoneNum) => {
+    const connection = await mysql2.createConnection(config.db);
+    const [rows] = await connection.execute(`
+    SELECT T.transactionID, T.fromPhoneNum, T.toPhoneNum, T.amount
+    FROM ${transactionTable} T
+    JOIN ${usersTable} AS Sender ON T.fromPhoneNum = Sender.phoneNum
+    WHERE Sender.phoneNum = '${senderPhoneNum}';`);
+    const data = helper.emptyOrRows(rows);
+    return data;
+}
+
 module.exports = {
     getUserByPhone,
     createUser,
     createTransaction,
-    setMoney
+    setMoney,
+    getAllTransactions
 };

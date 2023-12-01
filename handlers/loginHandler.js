@@ -21,20 +21,16 @@ router.post('/', async (req, res, next) => {
                 "token": token,
                 "refreshToken": refreshToken
             };
-            res.status(202).json(response);
+            return res.status(202).json(response);
         } else {
-            res.status(401).json({
+            return res.status(401).json({
                 "error": true,
                 "message": "wrong phoneNum or password!"
             });
         }
     } catch (err) {
         console.error(`error while loggin in the user: ${err.message}`);
-        res.status(500).json({
-            "error": true,
-            "message": "internal server error!"
-        });
-        next();
+        next(err);
     }
 
 });

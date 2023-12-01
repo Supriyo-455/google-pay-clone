@@ -11,14 +11,10 @@ router.post('/', async (req, res, next) => {
             availableAmount: req.body.availableAmount
         };
         userSignupRequest.password = await passwordUtil.encryptPass(userSignupRequest.password);
-        res.status(201).json(await db.createUser(userSignupRequest));
+        return res.status(201).json(await db.createUser(userSignupRequest));
     } catch (err) {
         console.error(`error while creating user: ${err.message}`);
-        res.status(500).json({
-            "error": true,
-            "message": "internal server server error."
-        });
-        next();
+        next(err);
     }
 });
 

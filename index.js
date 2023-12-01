@@ -7,6 +7,8 @@ const loginHandler = require('./handlers/loginHandler');
 const signupHandler = require('./handlers/signupHandler');
 const profileHandler = require('./handlers/profileHandler');
 const sendMoneyHandler = require('./handlers/sendMoneyHandler');
+const balanceHandler = require('./handlers/balanceHandler');
+const transactionsHandler = require('./handlers/transactionsHandler');
 
 const app = express();
 const port = 4000;
@@ -22,7 +24,8 @@ app.use('/signup', signupHandler);
 
 app.use('/profile', [jwtMiddleware, profileHandler]);
 app.use('/send', [jwtMiddleware, sendMoneyHandler]);
-// app.use('/balance', [jwtMiddleware, balanceHandler]);
+app.use('/balance', [jwtMiddleware, balanceHandler]);
+app.use('/transactions', [jwtMiddleware, transactionsHandler]);
 
 app.use(errorMiddleware);
 
