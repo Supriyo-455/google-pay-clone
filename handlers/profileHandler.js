@@ -7,7 +7,7 @@ router.post('/', async (req, res, next) => {
     try {
         const userData = await db.getUserByPhone(req.body.phoneNum);
         if (userData.length < 1) {
-            return res.status(404).json({ "message": "user not found!" });
+            return res.status(404).json({ "error": false, "message": "user not found!" });
         }
         return res.status(200).json(userData[0]);
     } catch (err) {

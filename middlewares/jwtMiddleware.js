@@ -8,7 +8,6 @@ const jwtValidate = (req, res, next) => {
             if (err) {
                 console.error(`error verifing jwt: ${err.message}`);
                 return res.status(401).json({
-                    "error": true,
                     "message": 'Unauthorized access!.'
                 });
             }
@@ -17,7 +16,6 @@ const jwtValidate = (req, res, next) => {
     } else {
         console.error(`token not found!`);
         return res.status(403).send({
-            "error": true,
             "message": 'not authorized.'
         });
     }
